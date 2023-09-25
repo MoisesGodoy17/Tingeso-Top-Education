@@ -23,9 +23,9 @@ public class AlumnoEntity {
 
     private String apellidos;
     private String nombres;
-    private Date fecha_nacimiento;
+    private String fecha_nacimiento;
     private String tipo_colegio;
     private String nombre_colegio;
-    private Date ano_egreso;
+    private String ano_egreso;
 
 }
