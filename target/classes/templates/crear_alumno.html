@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Registrar alumno</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class = "row">
+            <div class = col-lg-6-md-6 col-sm-6 container justify-content-center card>
+                <h1 class = "text-center">Registro de alumnos</h1>
+                <div class = "card-body">
+                    <form th:action = "@{/alumno/nuevo}" th:object = "${alumno}" method="POST">
+                        <div class = "form-group">
+                            <label>Rut:</label>
+                            <input type = "text" name="rut" th:field="*{rut}" class="form-control" placeholder="12345678-9 ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Apellidos:</label>
+                            <input type = "text" name="apellidos" th:field="*{apellidos}" class="form-control" placeholder="Ingrese sus apellidos ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Nombres:</label>
+                            <input type = "text" name="nombres" th:field="*{nombres}" class="form-control" placeholder="Ingrese sus nombres ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Fecha de nacimiento:</label>
+                            <input type = "date" name="fech_naci" th:field="*{fecha_nacimiento}" class="form-control" placeholder="2000-01-01 ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Tipo de colegio:</label>
+                            <input type = "text" name="tip_coleg" th:field="*{tipo_colegio}" class="form-control" placeholder="Privado, subvencionado o municipal ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Nombre de colegio:</label>
+                            <input type = "text" name="nom_cole" th:field="*{nombre_colegio}" class="form-control" placeholder="Ingrese el colegio de egreso ">
+                        </div>
+                        <div class = "form-group">
+                            <label>Fecha de egreso:</label>
+                            <input type = "date" name="anos-egre" th:field="*{ano_egreso}" class="form-control" placeholder="Años en que egreso ">
+                        </div>
+                        <br>
+                        <div class = "box-footer">
+                            <button class = "btn btn-success">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
