@@ -14,11 +14,8 @@ import java.util.Date;
 @NoArgsConstructor
 public class AlumnoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", unique = true, nullable = false)
-    private Long id;
-
-    @Column(nullable = false)
+   // @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "rut", unique = true, nullable = false, length = 10)
     private String rut;
 
     private String apellidos;
