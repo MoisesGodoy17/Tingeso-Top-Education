@@ -31,7 +31,7 @@ public class CuotasEntity {
     private int descuento;
     private int interes;
 
-    private String cant_cuotas;
+    private int cant_cuotas;
 
     // Define la relación ManyToOne con AlumnoEntity
     @ManyToOne

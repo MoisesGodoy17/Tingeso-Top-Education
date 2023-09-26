@@ -23,6 +23,6 @@ public class AlumnoEntity {
     private String fecha_nacimiento;
     private String tipo_colegio;
     private String nombre_colegio;
-    private String ano_egreso;
+    private int ano_egreso;
 
 }

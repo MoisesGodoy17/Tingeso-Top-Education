@@ -17,6 +17,7 @@ public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
 
+
     @GetMapping("/alumnos/")
     public String todos(Model model){
         model.addAttribute("alumno", alumnoService.todos());

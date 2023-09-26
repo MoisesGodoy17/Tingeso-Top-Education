@@ -1,5 +1,7 @@
 package com.top_education.top_edutation.services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import com.top_education.top_edutation.entities.AlumnoEntity;
 import com.top_education.top_edutation.entities.CuotasEntity;
 import com.top_education.top_edutation.repositories.AlumnoRepository;
@@ -27,7 +29,7 @@ public class CuotasService {
         float monto = ((float) 1500000 /cantCuotas)*descuento;
         int montoInt = (int) Math.floor(monto);
 
-        if (alumnoEntity != null){
+
             for (int i = 1; i > cantCuotas+1; i++){
                 LocalDate fecha = fechaEmision.plusMonths(1);
                 CuotasEntity cuotasEntity = new CuotasEntity();
@@ -35,9 +37,12 @@ public class CuotasService {
                 cuotasEntity.setFechaEmision(fechaEmision);
                 cuotasEntity.setFechaPago(fecha);
                 cuotasEntity.setEstado("No pagada");
+                cuotasEntity.setAlumno(alumnoEntity);
                 cuotasRepository.save(cuotasEntity);
-            }
+                System.out.println("hola bueno"); //ahora no esta entrando a crear las cuotas
+
         }
+        System.out.println("hola malo");
     }
 
     //funcion que recibe el alumno y otros datos para calcular el descuento por años de egreso.
@@ -64,5 +69,9 @@ public class CuotasService {
             descuento = descuento + 0.10f;
         }
         return descuento;
+    }
+
+    public List<CuotasEntity> obtenerCuotasPorRut(String rut) {
+        return cuotasRepository.findByAlumnoRut(rut);
     }
 }

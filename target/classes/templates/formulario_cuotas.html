@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Cuotas</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -9,18 +11,22 @@
         <h1 class="text-center">Cuotas</h1>
         <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
             <div class="card-body">
-                <form th:action="@{/alumnos/cuotas/}" th:object="${cuotas}" method="POST">
+                <form action="/alumnos/cuotas/crear" method="POST">
                     <div class="form-group">
                         <label>Rut:</label>
-                        <input type="text" name="rut" th:field="*{rut}" class="form-control" placeholder="12345678-9">
+                        <input type="text" name="rut" class="form-control" placeholder="12345678-9">
                     </div>
                     <div class="form-group">
                         <label>Cantidad de cuotas:</label>
-                        <input type="text" name="cantCuotas" th:field="*{cant_cuotas}" class="form-control" placeholder="Ingrese la cantidad de cuotas">
+                        <input type="number" name="cant_cuotas" class="form-control" placeholder="Ingrese la cantidad de cuotas">
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Emisión:</label>
+                        <input type="date" name="fechaEmision" class="form-control">
                     </div>
                     <br>
                     <div class="box-footer">
-                        <button class="btn btn-success">Enviar</button>
+                        <button type="submit" class="btn btn-success">Enviar</button>
                     </div>
                 </form>
             </div>
@@ -29,3 +35,4 @@
 </div>
 </body>
 </html>
+

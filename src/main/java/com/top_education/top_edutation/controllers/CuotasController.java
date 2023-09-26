@@ -8,10 +8,10 @@ import org.springframework.ui.Model;
 import com.top_education.top_edutation.entities.CuotasEntity;
 import com.top_education.top_edutation.services.CuotasService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
 
 @Controller
 public class CuotasController {
@@ -20,4 +20,32 @@ public class CuotasController {
 
     @Autowired
     AlumnoService alumnoService;
+
+    @GetMapping("/cuotas")
+    public String verCuotasForm(Model model) {
+        model.addAttribute("rut", ""); // Inicialmente, no se muestra ninguna cuota
+        return "cuotas";
+    }
+    @PostMapping("/cuotas")
+    public String verCuotas(@RequestParam String rut, Model model) {
+        List<CuotasEntity> cuotas = cuotasService.obtenerCuotasPorRut(rut);
+        model.addAttribute("rut", rut);
+        model.addAttribute("cuotas", cuotas);
+        return "cuotas";
+    }
+
+    @GetMapping("/alumnos/cuotas/crear")
+    public String mostrarFormularioCuotas(Model model) {
+        model.addAttribute("cuotas", model);
+        return "formulario_cuotas"; // Cambia esto al nombre de tu formulario
+    }
+
+    @PostMapping("/alumnos/cuotas/crear")
+    public String crearCuotas(
+            @RequestParam("rut") String rut,
+            @RequestParam("cant_cuotas") String cant_cuotas,
+            @RequestParam("fechaEmision") LocalDate fechaEmision) {
+        cuotasService.crearCuota(rut, cant_cuotas, fechaEmision);
+        return "redirect:/cuotas"; // Cambia esto a la página de visualización de cuotas
+    }
 }
