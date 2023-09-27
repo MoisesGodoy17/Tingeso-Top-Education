@@ -21,6 +21,7 @@ public class CuotasController {
     @Autowired
     AlumnoService alumnoService;
 
+
     @GetMapping("/cuotas")
     public String verCuotasForm(Model model) {
         model.addAttribute("rut", ""); // Inicialmente, no se muestra ninguna cuota

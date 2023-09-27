@@ -7,7 +7,7 @@
 </head>
 <body>
 <div class="container">
-    <div class="row">
+    <div class="table">
         <h1 class="text-center">Ver Cuotas</h1>
         <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
             <div class="card-body">
@@ -16,6 +16,7 @@
                         <label>Rut:</label>
                         <input type="text" name="rut" class="form-control" th:value="${rut}" placeholder="12345678-9">
                     </div>
+                    <br>
                     <div class="box-footer">
                         <button class="btn btn-success">Ver Cuotas</button>
                     </div>
@@ -35,7 +36,6 @@
                     <th>Fecha de Emisión</th>
                     <th>Fecha de Pago</th>
                     <th>Estado</th>
-                    <!-- Agrega más columnas según tus necesidades -->
                 </tr>
                 </thead>
                 <tbody>
@@ -45,7 +45,6 @@
                     <td th:text="${cuota.fechaEmision}"></td>
                     <td th:text="${cuota.fechaPago}"></td>
                     <td th:text="${cuota.estado}"></td>
-                    <!-- Agrega más filas según tus necesidades -->
                 </tr>
                 </tbody>
             </table>

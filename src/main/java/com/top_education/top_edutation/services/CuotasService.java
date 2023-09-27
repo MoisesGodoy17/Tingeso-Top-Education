@@ -21,38 +21,32 @@ public class CuotasService {
     private AlumnoRepository alumnoRepository;
 
     public  void crearCuota(String rut, String cant_cuotas, LocalDate fechaEmision){
-        int cantCuotas = Integer.parseInt(cant_cuotas);
         AlumnoEntity alumnoEntity = alumnoRepository.findByRut(rut);
+        int cantCuotas = Integer.parseInt(cant_cuotas);
         float descuento = 0.0f;
-        descuento = calcularDescuentoAno(alumnoEntity, descuento);
-        descuento = descuento + calcularDescuentoColegio(alumnoEntity, descuento);
-        float monto = ((float) 1500000 /cantCuotas)*descuento;
-        int montoInt = (int) Math.floor(monto);
+        descuento = calcularDescuentoAno(alumnoEntity, descuento) + calcularDescuentoColegio(alumnoEntity, descuento);
+        int montoInt = (int) Math.floor(((float) 1500000 /cantCuotas) - ((float) 1500000 /cantCuotas)*descuento);
 
-
-            for (int i = 1; i > cantCuotas+1; i++){
-                LocalDate fecha = fechaEmision.plusMonths(1);
-                CuotasEntity cuotasEntity = new CuotasEntity();
-                cuotasEntity.setMonto(montoInt);
-                cuotasEntity.setFechaEmision(fechaEmision);
-                cuotasEntity.setFechaPago(fecha);
-                cuotasEntity.setEstado("No pagada");
-                cuotasEntity.setAlumno(alumnoEntity);
-                cuotasRepository.save(cuotasEntity);
-                System.out.println("hola bueno"); //ahora no esta entrando a crear las cuotas
-
+        for (int i = 1; i < cantCuotas+1; i++){
+            LocalDate fecha = LocalDate.now().withDayOfMonth(5).plusMonths(i);
+            CuotasEntity cuotasEntity = new CuotasEntity();
+            cuotasEntity.setMonto(montoInt);
+            cuotasEntity.setFechaEmision(fechaEmision);
+            cuotasEntity.setFechaPago(fecha);
+            cuotasEntity.setEstado("No pagada");
+            cuotasEntity.setCant_cuotas(cantCuotas);
+            cuotasEntity.setAlumno(alumnoEntity);
+            cuotasRepository.save(cuotasEntity);
         }
-        System.out.println("hola malo");
     }
 
     //funcion que recibe el alumno y otros datos para calcular el descuento por años de egreso.
     public float calcularDescuentoAno( AlumnoEntity alumnoEntity, float descuento){
-        int anoEgreso = Integer.parseInt(alumnoEntity.getAno_egreso());
-
+        int anoEgreso = alumnoEntity.getAno_egreso();
         if (anoEgreso  <= 1){
             descuento = 0.15f;
         }
-        if (2 == anoEgreso){
+        if (anoEgreso >= 1 && anoEgreso <= 2) {
             descuento = 0.08f;
         }
         if (anoEgreso >= 3 && anoEgreso <= 4) {
