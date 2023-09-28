@@ -33,6 +33,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Monto</th>
+                    <th>Interes</th>
                     <th>Fecha de Emisión</th>
                     <th>Fecha de Pago</th>
                     <th>Estado</th>
@@ -42,6 +43,7 @@
                 <tr th:each="cuota : ${cuotas}">
                     <td th:text="${cuota.idCuota}"></td>
                     <td th:text="${cuota.monto}"></td>
+                    <td th:text="${cuota.interes}"></td>
                     <td th:text="${cuota.fechaEmision}"></td>
                     <td th:text="${cuota.fechaPago}"></td>
                     <td th:text="${cuota.estado}"></td>
