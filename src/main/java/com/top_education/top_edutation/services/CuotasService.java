@@ -38,7 +38,8 @@ public class CuotasService {
             CuotasEntity cuotasEntity = new CuotasEntity();
             cuotasEntity.setMonto(montoInt);
             cuotasEntity.setFechaEmision(fechaEmision);
-            cuotasEntity.setFechaPago(fechaEmision.withDayOfMonth(10).plusMonths(i));
+            cuotasEntity.setFechaPago(fechaEmision.withDayOfMonth(5).plusMonths(i));
+            cuotasEntity.setFechaVencimiento(fechaEmision.withDayOfMonth(10).plusMonths(i));
             cuotasEntity.setEstado("No pagada");
             cuotasEntity.setCant_cuotas(cantCuotas);
             cuotasEntity.setAlumno(alumnoEntity);
@@ -49,7 +50,7 @@ public class CuotasService {
     //funcion que recibe el alumno y otros datos para calcular el descuento por años de egreso.
     public float calcularDescuentoAno(AlumnoEntity alumnoEntity, float descuento){
         int anoEgreso = alumnoEntity.getAno_egreso();
-        if (anoEgreso  <= 1){
+        if (anoEgreso  < 1){
             descuento = 0.15f;
         }
         if (anoEgreso >= 1 && anoEgreso <= 2) {
@@ -63,12 +64,17 @@ public class CuotasService {
     @Scheduled(fixedRate = 60000)
     public void generaCuotasAtrasadas(){
         List<CuotasEntity> cutasAtrasadas = cuotasRepository.findByEstado("No pagada");
+        List<CuotasEntity> cuotaConRetraso = cuotasRepository.findByEstado("Atrasada");
+        cutasAtrasadas.addAll(cuotaConRetraso);
+
         LocalDate fechaLocal = LocalDate.now();
         int multa;
+        System.out.println("No hola");
         for(CuotasEntity cuotas : cutasAtrasadas){
-            LocalDate fechaPago = cuotas.getFechaPago();
-            if (fechaLocal.isAfter(fechaPago)){
-                multa = (int) Math.floor((cuotas.getMonto()*calculaIntereAtraso(fechaLocal, fechaPago)) + cuotas.getInteres());
+            LocalDate fechaVence = cuotas.getFechaVencimiento();
+            if (fechaLocal.isAfter(fechaVence)){
+                System.out.println("Hola");
+                multa = (int) Math.floor((cuotas.getMonto()*calculaIntereAtraso(fechaLocal, fechaVence)) + cuotas.getInteres());
                 System.out.println("diferencia" + multa);
                 cuotas.setEstado("Atrasada");
                 cuotas.setInteres(multa);
@@ -78,8 +84,8 @@ public class CuotasService {
         }
     }
 
-    public float calculaIntereAtraso(LocalDate fechaLocal, LocalDate fechaPago){
-        int diferencia = fechaLocal.getMonthValue() - fechaPago.getMonthValue();
+    public float calculaIntereAtraso(LocalDate fechaLocal, LocalDate fechaVence){
+        int diferencia = fechaLocal.getMonthValue() - fechaVence.getMonthValue();
         // se resta la fecha de pago de cuota menos la fecha de facturacion para asi saber la diferencia y saber el retraso
         float deuda = 0.0f;
 
@@ -106,6 +112,21 @@ public class CuotasService {
             descuento = descuento + 0.10f;
         }
         return descuento;
+    }
+
+    public void pagarCuotas(String estado, Long idCuota){
+        CuotasEntity cuota = cuotasRepository.findByIdCuota(idCuota);
+        LocalDate fechaLocal = LocalDate.now().withDayOfMonth(5); // si es el mes tanto en el dia 4, se podra pagar el dia siguiente
+        LocalDate fechaVence = cuota.getFechaPago();
+        if (fechaLocal.isEqual(fechaVence) || fechaLocal.isAfter(fechaVence)){
+            cuota.setEstado("Pagada");
+            cuota.setFechaEmision(LocalDate.now());
+            cuotasRepository.save(cuota);
+        }
+    }
+
+    public CuotasEntity buscarCuotaPorId(Long id){
+        return cuotasRepository.findByIdCuota(id);
     }
 
     public List<CuotasEntity> obtenerCuotasPorRut(String rut) {

@@ -38,7 +38,7 @@ public class CuotasController {
     @GetMapping("/alumnos/cuotas/crear")
     public String mostrarFormularioCuotas(Model model) {
         model.addAttribute("cuotas", model);
-        return "formulario_cuotas"; // Cambia esto al nombre de tu formulario
+        return "formulario_cuotas";
     }
 
     @PostMapping("/alumnos/cuotas/crear")
@@ -47,6 +47,20 @@ public class CuotasController {
             @RequestParam("cant_cuotas") String cant_cuotas,
             @RequestParam("fechaEmision") LocalDate fechaEmision) {
         cuotasService.crearCuota(rut, cant_cuotas, fechaEmision);
-        return "redirect:/cuotas"; // Cambia esto a la página de visualización de cuotas
+        return "redirect:/cuotas";
+    }
+
+    @GetMapping("/alumnos/cuotas/pagar")
+    public String mostrarFormularioPagarCuotas(Model model) {
+        model.addAttribute("cuotas", model);
+        return "formulario_pagar_cuota";
+    }
+
+    @PostMapping("/alumnos/cuotas/pagar")
+    public String crearCuotas(
+            @RequestParam("idCuota") Long idCuota,
+            @RequestParam("estado") String estado) {
+        cuotasService.pagarCuotas(estado, idCuota);
+        return "redirect:/cuotas";
     }
 }

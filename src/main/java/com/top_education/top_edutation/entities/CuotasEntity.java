@@ -27,6 +27,9 @@ public class CuotasEntity {
     @Column(name = "fechaPago")
     private LocalDate fechaPago;
 
+    @Column(name = "fechaVencimiento")
+    private LocalDate fechaVencimiento;
+
     private String estado;
     private int descuento;
     private int interes;
