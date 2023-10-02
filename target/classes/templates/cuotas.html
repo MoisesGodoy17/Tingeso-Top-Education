@@ -38,6 +38,7 @@
                     <th>Fecha de Pago</th>
                     <th>Fecha de Vencimiento</th>
                     <th>Estado</th>
+                    <th>Pagar</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,9 @@
                     <td th:text="${cuota.fechaPago}"></td>
                     <td th:text="${cuota.fechaVencimiento}"></td>
                     <td th:text="${cuota.estado}"></td>
+                    <td>
+                        <a class="btn btn-primary" th:href="@{/alumnos/cuotas/pagar/{idCuota} (idCuota=${cuota.idCuota}) }" role="button">Pagar</a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

@@ -69,11 +69,9 @@ public class CuotasService {
 
         LocalDate fechaLocal = LocalDate.now();
         int multa;
-        System.out.println("No hola");
         for(CuotasEntity cuotas : cutasAtrasadas){
             LocalDate fechaVence = cuotas.getFechaVencimiento();
             if (fechaLocal.isAfter(fechaVence)){
-                System.out.println("Hola");
                 multa = (int) Math.floor((cuotas.getMonto()*calculaIntereAtraso(fechaLocal, fechaVence)) + cuotas.getInteres());
                 System.out.println("diferencia" + multa);
                 cuotas.setEstado("Atrasada");
@@ -114,11 +112,13 @@ public class CuotasService {
         return descuento;
     }
 
-    public void pagarCuotas(String estado, Long idCuota){
+    public void pagarCuotas(Long idCuota){
         CuotasEntity cuota = cuotasRepository.findByIdCuota(idCuota);
         LocalDate fechaLocal = LocalDate.now().withDayOfMonth(5); // si es el mes tanto en el dia 4, se podra pagar el dia siguiente
         LocalDate fechaVence = cuota.getFechaPago();
+        System.out.println("Hola NO Pagada");
         if (fechaLocal.isEqual(fechaVence) || fechaLocal.isAfter(fechaVence)){
+            System.out.println("Hola Pagada");
             cuota.setEstado("Pagada");
             cuota.setFechaEmision(LocalDate.now());
             cuotasRepository.save(cuota);

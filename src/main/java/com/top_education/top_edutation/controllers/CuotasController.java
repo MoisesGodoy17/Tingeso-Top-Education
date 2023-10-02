@@ -50,17 +50,19 @@ public class CuotasController {
         return "redirect:/cuotas";
     }
 
-    @GetMapping("/alumnos/cuotas/pagar")
-    public String mostrarFormularioPagarCuotas(Model model) {
-        model.addAttribute("cuotas", model);
+    @GetMapping("/alumnos/cuotas/pagar/{idCuota}")
+    public String mostrarFormularioPagarCuotas
+            (@PathVariable Long idCuota, Model model) {
+        CuotasEntity cuotas = cuotasService.buscarCuotaPorId(idCuota);
+        model.addAttribute("cuotas", cuotas);
         return "formulario_pagar_cuota";
     }
 
     @PostMapping("/alumnos/cuotas/pagar")
     public String crearCuotas(
             @RequestParam("idCuota") Long idCuota,
-            @RequestParam("estado") String estado) {
-        cuotasService.pagarCuotas(estado, idCuota);
+            @RequestParam("idCuota") Long estado) {
+        cuotasService.pagarCuotas(idCuota);
         return "redirect:/cuotas";
     }
 }

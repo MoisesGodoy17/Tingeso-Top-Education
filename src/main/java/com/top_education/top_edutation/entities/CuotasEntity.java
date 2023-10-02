@@ -33,6 +33,7 @@ public class CuotasEntity {
     private String estado;
     private int descuento;
     private int interes;
+    private int descuentoNotas;
 
     private int cant_cuotas;
 
