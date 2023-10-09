@@ -35,4 +35,10 @@ public class NotasController {
         ms.addAttribute("mensaje", "¡Fuera de plazo para ingresar notas!");
         return "redirect:/subir-archivo";
     }
+
+    @GetMapping("/subir-archivo-descuento")
+    public String generarDescuentoNotas(){
+        notaService.generaDescuentoPorNota();
+        return "redirect:/cuotas";
+    }
 }

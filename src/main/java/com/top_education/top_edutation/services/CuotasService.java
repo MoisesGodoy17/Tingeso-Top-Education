@@ -42,6 +42,7 @@ public class CuotasService {
             cuotasEntity.setFechaVencimiento(fechaEmision.withDayOfMonth(10).plusMonths(i));
             cuotasEntity.setEstado("No pagada");
             cuotasEntity.setCant_cuotas(cantCuotas);
+            cuotasEntity.setDescuento(0);
             cuotasEntity.setAlumno(alumnoEntity);
             cuotasRepository.save(cuotasEntity);
         }

@@ -34,9 +34,7 @@ public class CuotasEntity {
     private int descuento;
     private int interes;
     private int descuentoNotas;
-
     private int cant_cuotas;
-
     // Define la relación ManyToOne con AlumnoEntity
     @ManyToOne
     @JoinColumn(name = "rut")

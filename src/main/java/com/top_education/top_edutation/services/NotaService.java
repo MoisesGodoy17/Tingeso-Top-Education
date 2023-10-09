@@ -2,6 +2,7 @@ package com.top_education.top_edutation.services;
 
 import com.top_education.top_edutation.entities.AlumnoEntity;
 import com.top_education.top_edutation.entities.CuotasEntity;
+import com.top_education.top_edutation.repositories.CuotasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.top_education.top_edutation.entities.NotasEntity;
@@ -38,7 +39,7 @@ public class NotaService {
     private AlumnoRepository alumnoRepository;
 
     @Autowired
-    private  CuotasService cuotasService;
+    private CuotasRepository cuotasRepository;
 
     private final Logger logg = LoggerFactory.getLogger(NotaService.class);
 
@@ -128,37 +129,45 @@ public class NotaService {
         notasEntity.setFechaNota(fechaNota);
 
         int puntaje = Integer.parseInt(nota);
+
+        notasEntity.setEstadoNota(0);
         notasEntity.setPuntajeNota(puntaje);
         notasEntity.setAlumno(alumnoEntity);
         notaRepository.save(notasEntity);
     }
 
-    public int generaDescuentoPorNota(){
+    public void generaDescuentoPorNota(){
         List<LocalDate> primerosLunes = obtenerPrimerosLunes();
         LocalDate fechaActual = LocalDate.now();
+        LocalDate fechaPrueba = fechaActual.minusDays(3);
+        LocalDate fechaCuotaDelMes = fechaActual.withDayOfMonth(5);
 
-        List<NotasEntity> notasPorFecha = notaRepository.findByFechaNota(fechaActual);
-        if (contieneFecha(primerosLunes, fechaActual)) {//si la fecha coincide con el primer lunes del mes, entonces permite recibir archivos
+        List <NotasEntity> notasPorFecha = notaRepository.findByFechaNota(fechaPrueba);
+
+        if (contieneFecha(primerosLunes, fechaActual)){
             for (NotasEntity notas : notasPorFecha){
-                String rutAlumnoRevizado = notas.getAlumno().getRut();
-                List<NotasEntity> notasPorFechaYrut = notaRepository.findByAlumnoRutAndEstadoNota(rutAlumnoRevizado, 0);
-                int cantNotas = notasPorFechaYrut.size();
-                int i = 0;
-                int sumNota = 0;
-                for (NotasEntity notasPorRut : notasPorFechaYrut){
-                    sumNota = sumNota + notasPorRut.getPuntajeNota();
-                    notasPorRut.setEstadoNota(1);
-                    if ((i + 1) == cantNotas){
-                        int prom = sumNota/cantNotas;
-                        //falta bucar la cuota de es fecha y aplicarle el descuento
+                if (notas.getAlumno().getRut() != null){
+                    List<NotasEntity> notasPorEstado = notaRepository.findByAlumnoRutAndEstadoNota(notas.getAlumno().getRut(), 0);
+                    int i = 1, sumNota = 0;
+                    if (notas.getEstadoNota() == 0){
+                        for (NotasEntity notasDelAlumno : notasPorEstado){
+                            notasDelAlumno.setEstadoNota(1);
+                            sumNota = sumNota + notasDelAlumno.getPuntajeNota();
+                            System.out.println("Acumulado Puntaje: "+ sumNota);
+                            if (i == notasPorEstado.size()){
+                                System.out.println("Largo i y Size:"+ i + notasPorEstado.size() );
+                                float descuentoDeNota = calcularDescuentoNotas(sumNota/notasPorEstado.size());
+                                CuotasEntity cuota = cuotasRepository.findByAlumnoRutAndFechaPago(notasDelAlumno.getAlumno().getRut(), fechaCuotaDelMes);
+                                cuota.setDescuento((int) descuentoDeNota);
+                                System.out.println("Descuento: " + descuentoDeNota);
+                                cuotasRepository.save(cuota);
+                            }
+                            i++;
+                        }
                     }
                 }
             }
-
-            return 1;
         }
-        return 0;
-
     }
 
     public float calcularDescuentoNotas(int prom){
@@ -167,10 +176,10 @@ public class NotaService {
             descuento = 0.10f;
         }
         if (prom >= 900 && prom <= 949) {
-            descuento = 0.5f;
+            descuento = 0.05f;
         }
         if (prom >= 850 && prom <= 899) {
-            descuento = 0.2f;
+            descuento = 0.02f;
         }
         return descuento;
     }
