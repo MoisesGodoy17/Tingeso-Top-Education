@@ -58,6 +58,7 @@ public class CuotasController {
         return "formulario_pagar_cuota";
     }
 
+
     @PostMapping("/alumnos/cuotas/pagar")
     public String crearCuotas(
             @RequestParam("idCuota") Long idCuota,

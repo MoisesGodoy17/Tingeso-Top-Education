@@ -35,4 +35,9 @@ public class AlumnoController {
         alumnoService.guardar(alumnoEntity);
         return "redirect:/alumnos/";
     }
+
+    @GetMapping("/")
+    public String home(){
+        return "home";
+    }
 }
