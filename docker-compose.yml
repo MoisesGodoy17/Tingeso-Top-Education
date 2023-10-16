@@ -1,0 +1,28 @@
+version: "3.8"
+services:
+  postgres-db:
+    image: postgres:15
+    restart: always
+    volumes:
+      - ./data/db:/var/lib/postgresql/data  # Cambiado el path del host a /var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: hola123
+      POSTGRES_DB: top_education_prueba
+    ports:
+      - 5432:5432
+
+  app:
+    container_name: top-education-tingeso
+    image: moisesgodoy17/top-education-tingeso
+    ports:
+      - "8090:8090"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres-db:5432/top_education_prueba  # Cambiado el host a postgres-db
+      - spring.datasource.username=postgres
+      - spring.datasource.password=hola123
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db
