@@ -43,6 +43,7 @@ public class NotaService {
 
     private final Logger logg = LoggerFactory.getLogger(NotaService.class);
 
+    @Generated
     public static List<LocalDate> obtenerPrimerosLunes() {
         List<LocalDate> primerosLunes = new ArrayList<>();
         primerosLunes.add(LocalDate.of(2023, 1, 2));
@@ -60,9 +61,11 @@ public class NotaService {
         return primerosLunes;
     }
 
+    @Generated
     public static boolean contieneFecha(List<LocalDate> fechas, LocalDate fecha) {
         return fechas.contains(fecha);
     }
+
 
     public int verificaPrimerMesDelMes() {
         List<LocalDate> primerosLunes = obtenerPrimerosLunes();
@@ -120,22 +123,21 @@ public class NotaService {
         }
     }
 
+
     public void escribirDatos(String fecha, String nota, String rut) {
         AlumnoEntity alumnoEntity = alumnoRepository.findByRut(rut);
         NotasEntity notasEntity = new NotasEntity();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy"); // Cambiado el formato de la fecha
         LocalDate fechaNota = LocalDate.parse(fecha, formatter);
         notasEntity.setFechaNota(fechaNota);
-
         int puntaje = Integer.parseInt(nota);
-
         notasEntity.setEstadoNota(0);
         notasEntity.setPuntajeNota(puntaje);
         notasEntity.setAlumno(alumnoEntity);
         notaRepository.save(notasEntity);
     }
 
+    @Generated
     public void generaDescuentoPorNota(){
         List<LocalDate> primerosLunes = obtenerPrimerosLunes();
         LocalDate fechaActual = LocalDate.now();
@@ -158,8 +160,8 @@ public class NotaService {
                                 System.out.println("Largo i y Size:"+ i + notasPorEstado.size() );
                                 float descuentoDeNota = calcularDescuentoNotas(sumNota/notasPorEstado.size());
                                 CuotasEntity cuota = cuotasRepository.findByAlumnoRutAndFechaPago(notasDelAlumno.getAlumno().getRut(), fechaCuotaDelMes);
-                                cuota.setDescuento((int) descuentoDeNota);
                                 System.out.println("Descuento: " + descuentoDeNota);
+                                cuota.setDescuentoNotas((int) (descuentoDeNota*cuota.getMonto()));
                                 cuotasRepository.save(cuota);
                             }
                             i++;
@@ -170,6 +172,7 @@ public class NotaService {
         }
     }
 
+    @Generated
     public float calcularDescuentoNotas(int prom){
         float descuento = 0;
         if (prom >= 950 && prom <= 1000) {
@@ -183,5 +186,4 @@ public class NotaService {
         }
         return descuento;
     }
-
 }

@@ -6,6 +6,26 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link" href="/nuevo/">Agregar Alumno</a>
+                <a class="nav-link" href="/alumnos/">Listado de Alumnos</a>
+                <a class="nav-link" href="/cuotas">Cuotas</a>
+                <a class="nav-link" href="/alumnos/cuotas/crear">Crear Cuotas</a>
+                <a class="nav-link" href="/subir-archivo">Subir Notas</a>
+                <a class="nav-link" href="/reporte">Ver Reporte</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
     <div class="table">
         <h1 class="text-center">Ver Cuotas</h1>
@@ -34,6 +54,7 @@
                     <th>ID</th>
                     <th>Monto</th>
                     <th>Interes</th>
+                    <th>Descuento por Notas</th>
                     <th>Fecha de Emisión</th>
                     <th>Fecha de Pago</th>
                     <th>Fecha de Vencimiento</th>
@@ -46,6 +67,7 @@
                     <td th:text="${cuota.idCuota}"></td>
                     <td th:text="${cuota.monto}"></td>
                     <td th:text="${cuota.interes}"></td>
+                    <td th:text="${cuota.descuentoNotas}"></td>
                     <td th:text="${cuota.fechaEmision}"></td>
                     <td th:text="${cuota.fechaPago}"></td>
                     <td th:text="${cuota.fechaVencimiento}"></td>

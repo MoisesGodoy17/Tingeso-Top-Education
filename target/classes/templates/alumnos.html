@@ -18,10 +18,13 @@
                 <a class="nav-link" href="/alumnos/">Listado de Alumnos</a>
                 <a class="nav-link" href="/cuotas">Cuotas</a>
                 <a class="nav-link" href="/alumnos/cuotas/crear">Crear Cuotas</a>
+                <a class="nav-link" href="/subir-archivo">Subir Notas</a>
+                <a class="nav-link" href="/reporte">Ver Reporte</a>
             </div>
         </div>
     </div>
 </nav>
+
 <div class="container">
     <div class="row mt-4">
         <h1 class = "text-center">Listado de alumnos</h1>
@@ -36,6 +39,7 @@
                     <th>Tipo de colegio</th>
                     <th>Nombre del colegio</th>
                     <th>Año de egreso</th>
+                    <th>Arancel</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -47,6 +51,7 @@
                     <td th:text="${alumno.tipo_colegio}"></td>
                     <td th:text="${alumno.nombre_colegio}"></td>
                     <td th:text="${alumno.ano_egreso}"></td>
+                    <td th:text="${alumno.arancel}"></td>
                 </tr>
                 </tbody>
             </table>

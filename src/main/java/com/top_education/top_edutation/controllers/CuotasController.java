@@ -66,4 +66,9 @@ public class CuotasController {
         cuotasService.pagarCuotas(idCuota);
         return "redirect:/cuotas";
     }
+    @GetMapping("/cuotas/interes")
+    public String generarInteres() {
+        cuotasService.generaCuotasAtrasadas();
+        return "redirect:/cuotas";
+    }
 }

@@ -8,5 +8,4 @@ import org.springframework.stereotype.Repository;
 public interface AlumnoRepository extends CrudRepository<AlumnoEntity, Long>{
 
     public AlumnoEntity findByRut(String rut);
-
 }

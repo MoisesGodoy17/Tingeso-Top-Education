@@ -1,9 +1,8 @@
 package com.top_education.top_edutation.services;
 
-import org.springframework.scheduling.annotation.Scheduled;
+import lombok.Generated;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.time.LocalDate;
 
 @SpringBootApplication
-@EnableScheduling
 @Service
 public class CuotasService {
 
@@ -27,25 +25,47 @@ public class CuotasService {
     @Autowired
     private AlumnoRepository alumnoRepository;
 
-    public  void crearCuota(String rut, String cant_cuotas, LocalDate fechaEmision){
+    public boolean alumnoConCuotas(AlumnoEntity alumnoEntity){
+        if (alumnoEntity.getTipoPago().equals("Cuotas")){
+            return true;
+        }
+        return false;
+    }
+
+    public void crearCuota(String rut, String cant_cuotas, LocalDate fechaEmision){
         AlumnoEntity alumnoEntity = alumnoRepository.findByRut(rut);
         int cantCuotas = Integer.parseInt(cant_cuotas);
         float descuento = 0.0f;
         descuento = calcularDescuentoAno(alumnoEntity, descuento) + calcularDescuentoColegio(alumnoEntity, descuento);
         int montoInt = (int) Math.floor(((float) 1500000 /cantCuotas) - ((float) 1500000 /cantCuotas)*descuento);
 
-        for (int i = 1; i < cantCuotas+1; i++){
-            CuotasEntity cuotasEntity = new CuotasEntity();
-            cuotasEntity.setMonto(montoInt);
-            cuotasEntity.setFechaEmision(fechaEmision);
-            cuotasEntity.setFechaPago(fechaEmision.withDayOfMonth(5).plusMonths(i));
-            cuotasEntity.setFechaVencimiento(fechaEmision.withDayOfMonth(10).plusMonths(i));
-            cuotasEntity.setEstado("No pagada");
-            cuotasEntity.setCant_cuotas(cantCuotas);
-            cuotasEntity.setDescuento(0);
-            cuotasEntity.setAlumno(alumnoEntity);
-            cuotasRepository.save(cuotasEntity);
+        if (alumnoConCuotas(alumnoEntity) && verificaColegio(alumnoEntity, cantCuotas)){
+            for (int i = 1; i < cantCuotas+1; i++){
+                CuotasEntity cuotasEntity = new CuotasEntity();
+                cuotasEntity.setMonto(montoInt);
+                cuotasEntity.setFechaEmision(fechaEmision);
+                cuotasEntity.setFechaPago(fechaEmision.withDayOfMonth(5).plusMonths(i));
+                cuotasEntity.setFechaVencimiento(fechaEmision.withDayOfMonth(10).plusMonths(i));
+                cuotasEntity.setEstado("No pagada");
+                cuotasEntity.setCant_cuotas(cantCuotas);
+                cuotasEntity.setDescuento(0);
+                cuotasEntity.setAlumno(alumnoEntity);
+                cuotasRepository.save(cuotasEntity);
+            }
         }
+    }
+
+    public boolean verificaColegio(AlumnoEntity alumnoEntity, int canCuotas){
+        if (alumnoEntity.getTipo_colegio().equals("Municipal") && canCuotas <= 10){
+            return true;
+        }
+        if (alumnoEntity.getTipo_colegio().equals("Subvencionado") && canCuotas <= 7){
+            return true;
+        }
+        if (alumnoEntity.getTipo_colegio().equals("Privado") && canCuotas <= 4){
+            return true;
+        }
+        return false;
     }
 
     //funcion que recibe el alumno y otros datos para calcular el descuento por años de egreso.
@@ -62,7 +82,7 @@ public class CuotasService {
         }
         return descuento;
     }
-    @Scheduled(fixedRate = 60000)
+
     public void generaCuotasAtrasadas(){
         List<CuotasEntity> cutasAtrasadas = cuotasRepository.findByEstado("No pagada");
         List<CuotasEntity> cuotaConRetraso = cuotasRepository.findByEstado("Atrasada");
@@ -70,15 +90,17 @@ public class CuotasService {
 
         LocalDate fechaLocal = LocalDate.now();
         int multa;
-        for(CuotasEntity cuotas : cutasAtrasadas){
-            LocalDate fechaVence = cuotas.getFechaVencimiento();
-            if (fechaLocal.isAfter(fechaVence)){
-                multa = (int) Math.floor((cuotas.getMonto()*calculaIntereAtraso(fechaLocal, fechaVence)) + cuotas.getInteres());
-                System.out.println("diferencia" + multa);
-                cuotas.setEstado("Atrasada");
-                cuotas.setInteres(multa);
-                cuotas.setMonto(multa + cuotas.getMonto());
-                cuotasRepository.save(cuotas);
+        if(fechaLocal.getDayOfMonth()==11){
+            for(CuotasEntity cuotas : cutasAtrasadas){
+                LocalDate fechaVence = cuotas.getFechaVencimiento();
+                if (fechaLocal.isAfter(fechaVence)){
+                    multa = (int) Math.floor((cuotas.getMonto()*calculaIntereAtraso(fechaLocal, fechaVence)) + cuotas.getInteres());
+                    System.out.println("diferencia" + multa);
+                    cuotas.setEstado("Atrasada");
+                    cuotas.setInteres(multa);
+                    cuotas.setMonto(multa + cuotas.getMonto());
+                    cuotasRepository.save(cuotas);
+                }
             }
         }
     }
@@ -117,9 +139,7 @@ public class CuotasService {
         CuotasEntity cuota = cuotasRepository.findByIdCuota(idCuota);
         LocalDate fechaLocal = LocalDate.now().withDayOfMonth(5); // si es el mes tanto en el dia 4, se podra pagar el dia siguiente
         LocalDate fechaVence = cuota.getFechaPago();
-        System.out.println("Hola NO Pagada");
         if (fechaLocal.isEqual(fechaVence) || fechaLocal.isAfter(fechaVence)){
-            System.out.println("Hola Pagada");
             cuota.setEstado("Pagada");
             cuota.setFechaEmision(LocalDate.now());
             cuotasRepository.save(cuota);

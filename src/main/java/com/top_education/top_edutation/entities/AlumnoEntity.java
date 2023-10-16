@@ -24,6 +24,8 @@ public class AlumnoEntity {
     private String tipo_colegio;
     private String nombre_colegio;
     private int ano_egreso;
+    private String tipoPago;
+    private int arancel;
     //private String tipoPago -> para saber con que pago el cliente
 
 }

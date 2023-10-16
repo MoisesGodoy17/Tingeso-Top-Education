@@ -1,5 +1,6 @@
 package com.top_education.top_edutation.controllers;
 
+import com.top_education.top_edutation.services.ReporteService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +18,11 @@ public class AlumnoController {
     @Autowired
     AlumnoService alumnoService;
 
+    @Autowired
+    ReporteService reporteService;
 
+
+    
     @GetMapping("/alumnos/")
     public String todos(Model model){
         model.addAttribute("alumno", alumnoService.todos());

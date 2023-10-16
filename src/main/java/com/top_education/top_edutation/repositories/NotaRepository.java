@@ -15,4 +15,6 @@ public interface NotaRepository extends JpaRepository<NotasEntity, Long> {
     List<NotasEntity> findByAlumnoRutAndEstadoNota(String rut, int estado);
 
     List<NotasEntity> findByFechaNota(LocalDate fechaNota);
+
+    List<NotasEntity> findByAlumnoRut(String rut);
 }

@@ -7,6 +7,26 @@
     </head>
 </head>
 <body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link" href="/nuevo/">Agregar Alumno</a>
+                <a class="nav-link" href="/alumnos/">Listado de Alumnos</a>
+                <a class="nav-link" href="/cuotas">Cuotas</a>
+                <a class="nav-link" href="/alumnos/cuotas/crear">Crear Cuotas</a>
+                <a class="nav-link" href="/subir-archivo">Subir Notas</a>
+                <a class="nav-link" href="/reporte">Ver Reporte</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
 <div class="container">
     <h1 class="mt-5">Subir Archivo de Texto</h1>
     <form th:action="@{/subir-archivo}" method="post" enctype="multipart/form-data" class="mt-3">
@@ -18,7 +38,7 @@
     </form>
     <h3 th:text ="${mensaje}"></h3>
     <td>
-        <a class="btn btn-primary" th:href="@{/subir-archivo-descuento}" role="button">Generar Descuentos</a>
+        <a class="btn btn-warning" th:href="@{/subir-archivo-descuento}" role="button">Generar Descuentos</a>
     </td>
 </div>
 </body>

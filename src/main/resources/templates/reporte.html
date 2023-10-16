@@ -1,10 +1,69 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reporte del Estudiante</title>
+    <!-- Enlaces a Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 </head>
 <body>
 
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Inicio</a>
+                <a class="nav-link" href="/nuevo/">Agregar Alumno</a>
+                <a class="nav-link" href="/alumnos/">Listado de Alumnos</a>
+                <a class="nav-link" href="/cuotas">Cuotas</a>
+                <a class="nav-link" href="/alumnos/cuotas/crear">Crear Cuotas</a>
+                <a class="nav-link" href="/subir-archivo">Subir Notas</a>
+                <a class="nav-link" href="/reporte">Ver Reporte</a>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="table">
+        <h1 class="text-center">Reporte del Estudiante</h1>
+        <div class="col-lg-4 col-md-6 col-sm-12 mx-auto">
+            <div class="card-body">
+                <form th:action="@{/reporte}" method="POST">
+                    <div class="form-group">
+                        <label>Rut:</label>
+                        <input type="text" name="rut" class="form-control" th:value="${rut}" placeholder="12345678-9">
+                    </div>
+                    <br>
+                    <div class="box-footer">
+                        <button class="btn btn-success">Ver Reporte</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-lg-12">
+            <h3>Reporte para el Rut: <span th:text="${rut}"></span></h3>
+            <ul class="list-group">
+                <li class="list-group-item"><strong>RUT:</strong> <span th:text="${rut}"></span></li>
+                <li class="list-group-item"><strong>Nombres:</strong> <span th:text="${nombres}"></span></li>
+                <li class="list-group-item"><strong>Monto Total por Pagar:</strong> <span th:text="${montoTotal}"></span></li>
+                <li class="list-group-item"><strong>Tipo de Pago:</strong> <span th:text="${tipoPago}"></span></li>
+                <li class="list-group-item"><strong>Número de Pruebas Rendidas:</strong> <span th:text="${pruebasRendidas}"></span></li>
+                <li class="list-group-item"><strong>Cuotas Pactadas:</strong> <span th:text="${cuotasPactadas}"></span></li>
+                <li class="list-group-item"><strong>Cuotas Pagadas:</strong> <span th:text="${cuotasPagadas}"></span></li>
+                <li class="list-group-item"><strong>Cuotas Atrasadas:</strong> <span th:text="${cuotasAtrasadas}"></span></li>
+                <li class="list-group-item"><strong>Total Pagado:</strong> <span th:text="${totalPagado}"></span></li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 </html>
+
