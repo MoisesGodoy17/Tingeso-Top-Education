@@ -1,5 +1,17 @@
 version: "3.8"
 services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - app1
+      - app2
+
   postgres-db:
     image: postgres:15
     restart: always
@@ -12,11 +24,26 @@ services:
     ports:
       - 5432:5432
 
-  app:
-    container_name: top-education-tingeso
+  app1:
+    container_name: top-education-tingeso1
     image: moisesgodoy17/top-education-tingeso
     ports:
-      - "8090:8090"
+      - "8091:8090"
+    environment:
+      - spring.datasource.url=jdbc:postgresql://postgres-db:5432/top_education_prueba  # Cambiado el host a postgres-db
+      - spring.datasource.username=postgres
+      - spring.datasource.password=hola123
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - postgres-db
+
+  app2:
+    container_name: top-education-tingeso2
+    image: moisesgodoy17/top-education-tingeso
+    ports:
+      - "8092:8090"
     environment:
       - spring.datasource.url=jdbc:postgresql://postgres-db:5432/top_education_prueba  # Cambiado el host a postgres-db
       - spring.datasource.username=postgres
