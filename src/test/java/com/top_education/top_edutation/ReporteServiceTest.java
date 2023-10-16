@@ -48,6 +48,8 @@ public class ReporteServiceTest {
     @InjectMocks
     private ReporteService reporteService;
 
+    //escribirNotas
+
     AlumnoEntity alumnoEntity = new AlumnoEntity("25100345-9","Godoy Carreño",
             "Moises Godoy","2000-04-17",
             "Municipal","Almendros",
@@ -87,7 +89,7 @@ public class ReporteServiceTest {
         assertEquals(350000, montoTotal);
     }
     @Test
-    public void testTipoDePago() {
+    void testTipoDePago() {
         when(alumnoRepository.findByRut(alumnoEntity.getRut())).thenReturn(alumnoEntity);
         String tipoPago = reporteService.TipoDePago(alumnoEntity.getRut());
 
@@ -131,7 +133,7 @@ public class ReporteServiceTest {
     }
 
     @Test
-    public void testTotalPagado() {
+    void testTotalPagado() {
 
         CuotasEntity cuota111 = new CuotasEntity(1L, 175000, LocalDate.now().withMonth(3).withDayOfMonth(1),
                 LocalDate.now().withMonth(4).withDayOfMonth(5), LocalDate.now().withMonth(4).withDayOfMonth(11),

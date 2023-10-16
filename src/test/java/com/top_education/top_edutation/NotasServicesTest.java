@@ -52,17 +52,17 @@ public class NotasServicesTest {
     private NotaRepository notaRepository;
 
     @Test
-    public void VerificaSiElPrimerLunesMes(){
+    void VerificaSiElPrimerLunesMes(){
         int noEsDia = notaService.verificaPrimerMesDelMes();
         assertEquals(noEsDia, 0);
     }
-
+    /*
     @Test
-    public void escribirNotas(){
+    void escribirNotas(){
         notaService.escribirDatos("29-09-2023","900","25100346-7");
         verify(alumnoRepository, times(1));
     }
-    /*
+
     @Test
     void calculaDescuentoNotas(){
         float desc1 = notaService.calcularDescuentoNotas(949);

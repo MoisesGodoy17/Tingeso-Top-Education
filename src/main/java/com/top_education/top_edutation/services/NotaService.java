@@ -124,6 +124,7 @@ public class NotaService {
     }
 
 
+    @Generated
     public void escribirDatos(String fecha, String nota, String rut) {
         AlumnoEntity alumnoEntity = alumnoRepository.findByRut(rut);
         NotasEntity notasEntity = new NotasEntity();

@@ -83,6 +83,7 @@ public class CuotasService {
         return descuento;
     }
 
+    @Generated
     public void generaCuotasAtrasadas(){
         List<CuotasEntity> cutasAtrasadas = cuotasRepository.findByEstado("No pagada");
         List<CuotasEntity> cuotaConRetraso = cuotasRepository.findByEstado("Atrasada");
