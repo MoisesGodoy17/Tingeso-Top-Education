@@ -19,17 +19,17 @@ Para ejecutar esta aplicación necesitas tener instalado:
 
 ```bash
 git clone https://github.com/tu-usuario/tu-repo.git
-cd tu-repo
+cd \Tingeso-Top-Education-main
 ```
 
 2. **Levanta los contenedores:**
 
 ```bash
-docker-compose up --build
+docker-compose up 
 ```
 
 3. Accede a la aplicación desde tu navegador:\
-   `http://localhost` (o el puerto configurado en `nginx.conf`)
+   `http://localhost:80`
 
 ---
 
@@ -38,8 +38,8 @@ docker-compose up --build
 El sistema está compuesto por los siguientes servicios:
 
 - **Backend Spring Boot (Java 17):** API REST con lógica de negocio.
-- **PostgreSQL:** Base de datos relacional para persistencia.
-- **Nginx:** Balanceador de carga con 3 réplicas de la aplicación backend.
+- **PostgreSQL 15:** Base de datos relacional.
+- **Nginx:** Balanceador de carga con 2 réplicas de la aplicación backend.
 - **Docker Compose:** Orquestador de contenedores para levantar todo el entorno local.
 
 ---
@@ -81,14 +81,6 @@ El sistema automatiza el proceso de pagos y gestiona:
 
 ---
 
-## ☁️ Despliegue en Producción
-
-- El proyecto está preparado para desplegarse en la nube (ej. AWS o DigitalOcean)
-- Script de **Terraform** para provisionamiento de infraestructura
-- Aplicación accesible desde navegador web con balanceo de carga
-
----
-
 ## 📚 Tecnologías utilizadas
 
 - Java 17
@@ -100,18 +92,15 @@ El sistema automatiza el proceso de pagos y gestiona:
 - Docker / Docker Compose
 - Nginx
 - Jenkins / SonarQube
-- Terraform
 
 ---
 
 ## 🧑‍💻 Autor
 
-- Nombre: [Tu nombre]
-- Contacto: [Tu email o LinkedIn]
+- Nombre: Moises Godoy
+- Contacto: [linkedin](https://www.linkedin.com/in/moises-andres-godoy-carre%C3%B1o-58b4a4370/)
 
 ---
 
-## 📃 Licencia
-
-Este proyecto es parte de una evaluación académica y su distribución está sujeta a las políticas de la institución correspondiente.
+## Este fue un trabajo para el ramo Técnicas de Ingeniería en Software. 
 
