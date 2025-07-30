@@ -67,6 +67,19 @@ El sistema automatiza el proceso de pagos y gestiona:
 - HU6: Cálculo automático de planilla de pagos
 - HU7: Reporte detallado de estado de pagos por estudiante
 
+
+## Ventana principal de la aplicacion. 
+<img width="1275" height="905" alt="Captura de pantalla 2025-07-29 225043" src="https://github.com/user-attachments/assets/aea48296-c9ec-412a-b299-b0ba2ee2f6a1" />
+
+## Registro de nuevos Alumnos. 
+<img width="1277" height="907" alt="Captura de pantalla 2025-07-29 225100" src="https://github.com/user-attachments/assets/952c65d8-eb02-4c54-b9f5-7c57ca687e33" />
+
+## Listado de Alumnos. 
+<img width="1275" height="905" alt="Captura de pantalla 2025-07-29 225129" src="https://github.com/user-attachments/assets/d89a885f-8e5d-457d-9ed1-9becbff2452d" />
+
+## Reporte de un Alumno. 
+<img width="1275" height="905" alt="Captura de pantalla 2025-07-29 225154" src="https://github.com/user-attachments/assets/7068ca8c-72a5-4fd4-9114-d23d76cd994d" />
+
 ---
 
 ## 🧪 Testing y CI/CD
