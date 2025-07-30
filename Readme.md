@@ -18,8 +18,8 @@ Para ejecutar esta aplicación necesitas tener instalado:
 1. **Clona el repositorio:**
 
 ```bash
-git clone https://github.com/tu-usuario/tu-repo.git
-cd \Tingeso-Top-Education-main
+git clone https://github.com/MoisesGodoy17/Tingeso-Top-Education.git
+cd Tingeso-Top-Education
 ```
 
 2. **Levanta los contenedores:**
