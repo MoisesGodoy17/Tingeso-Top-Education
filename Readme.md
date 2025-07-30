@@ -98,7 +98,7 @@ El sistema automatiza el proceso de pagos y gestiona:
 ## 🧑‍💻 Autor
 
 - Nombre: Moises Godoy
-- Contacto: [linkedin](https://www.linkedin.com/in/moises-andres-godoy-carre%C3%B1o-58b4a4370/)
+- Contacto: [Linkedin](https://www.linkedin.com/in/moises-andres-godoy-carre%C3%B1o-58b4a4370/)
 
 ---
 
